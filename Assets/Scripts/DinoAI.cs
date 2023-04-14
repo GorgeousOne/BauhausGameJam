@@ -57,9 +57,10 @@ public class DinoAI : MonoBehaviour
                 {
                     Stage = InfectionStage.Transform;
                     SpriteRenderer.sprite = sprites[0];
+                    Debug.Log("transform");
                 }
 
-                Debug.Log("Dino");
+                
                 break;
 
             case InfectionStage.Transform:
@@ -68,11 +69,10 @@ public class DinoAI : MonoBehaviour
                     Stage = InfectionStage.Kawaii;
                     Timer = 0;
                     SpriteRenderer.sprite = sprites[1];
+                    Debug.Log("kawaii");
                     break;
                 }
                 Timer = Timer + Time.deltaTime;
-
-                Debug.Log("transform");
                 break;
 
             case InfectionStage.Kawaii:
@@ -80,9 +80,9 @@ public class DinoAI : MonoBehaviour
                 {
                     Stage = InfectionStage.Explode;
                     SpriteRenderer.sprite = sprites[2];
+                    Debug.Log("Explosion");
                 }
 
-                Debug.Log("kawaii");
                 break;
 
             case InfectionStage.Explode:
@@ -93,8 +93,7 @@ public class DinoAI : MonoBehaviour
                     Destroy(gameObject);
                 }
                 Timer = Timer + Time.deltaTime;
-                
-                Debug.Log("Explosion");
+
                 break;
         }
     }
