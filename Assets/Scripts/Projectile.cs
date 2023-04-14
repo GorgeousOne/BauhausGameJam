@@ -5,7 +5,7 @@ public class Projectile : MonoBehaviour {
 
 	[SerializeField] private float lifetime = 5;
 	[SerializeField] private float speed = 10;
-	
+	 
 	private Rigidbody2D _rigid;
 	
 	private void Awake() {
