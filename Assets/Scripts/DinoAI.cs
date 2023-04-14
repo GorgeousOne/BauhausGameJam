@@ -6,6 +6,8 @@ using UnityEngine;
 
 public class DinoAI : MonoBehaviour
 {
+    
+
     // Fields
     enum InfectionStage{
         Dino,
@@ -28,12 +30,22 @@ public class DinoAI : MonoBehaviour
     // Components
     SpriteRenderer SpriteRenderer;
     
+
+    //Movement
     [SerializeField] private float speed = 10;
     [SerializeField] private float accelerateTime = 0.2f;
     
     private GameInputs _gameInputs;
     private Rigidbody2D _rigid;
     public Vector2 _moveInput;
+    public float movementSpeed = 0.1f;
+
+    public GameObject Target;
+    Vector2 TargetVector;
+    float timer2 = 0;
+    int movementStage;
+    public float targetVectorUpdatetime = 1;
+
 
     // Start is called before the first frame update
     void Start()
@@ -59,7 +71,7 @@ public class DinoAI : MonoBehaviour
                     SpriteRenderer.sprite = sprites[0];
                     Debug.Log("transform");
                 }
-
+                MovementStage1();
                 
                 break;
 
@@ -98,9 +110,31 @@ public class DinoAI : MonoBehaviour
         }
     }
 
+
+    void MovementStage1()
+    {
+        switch(movementStage) 
+        {
+            case 0: // Targeting stage
+                TargetVector = Target.transform.position - transform.position;
+                movementStage = 1;
+                timer2 = Time.time;
+
+                break;
+            case 1:
+                _moveInput = TargetVector.normalized * movementSpeed * Time.deltaTime;
+                
+                if(timer2+targetVectorUpdatetime < Time.time){
+                    movementStage = 0;
+                }
+                break;
+        }
+
+    }
+
     void transformKawaii()
     {
-
+        
     }
 
     private void _CalcMoveSpeed() {
