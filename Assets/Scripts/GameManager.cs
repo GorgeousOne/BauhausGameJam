@@ -24,7 +24,6 @@ public class GameManager : MonoBehaviour {
 			SceneManager.UnloadSceneAsync(_currentLoadedScene.ToString());
 		}
 		SceneManager.LoadSceneAsync(newScene.ToString(), LoadSceneMode.Additive);
-		Debug.Log("VAR");
 		_currentLoadedScene = newScene;
 	}
 }
