@@ -5,7 +5,6 @@ public class PlayerInteraction : MonoBehaviour {
     
     [SerializeField] private float shootInterval = 1;
     [SerializeField] private Projectile bulletPrefab;
-    [SerializeField] private Camera gameCam;
     
     private GameInputs _gameInputs;
     private bool _isShootPressed;
@@ -13,10 +12,12 @@ public class PlayerInteraction : MonoBehaviour {
     
     private void Awake() {
         _gameInputs = new GameInputs();
+        _gameInputs.Enable();
     }
 
     void Update() {
         _isShootPressed = _gameInputs.Player1.Shoot.IsPressed();
+        _shootLogic();
     }
 
     private void _shootLogic() {
@@ -25,7 +26,7 @@ public class PlayerInteraction : MonoBehaviour {
         }
         if (Time.time - _lastShot < shootInterval) {
             return;
-        } 
+        }
         _shoot();
     }
 
@@ -33,7 +34,11 @@ public class PlayerInteraction : MonoBehaviour {
         _lastShot = Time.time;
         Projectile bullet = Instantiate(bulletPrefab, gameObject.transform.position, Quaternion.identity);
 
-        Vector3 mousePos = gameCam.ScreenToWorldPoint(Mouse.current.position.value);
+        //Vector2 mouseScreenPos = _gameInputs.Player1.Aim.ReadValue<Vector2>();
+        Vector2 mouseScreenPos = Mouse.current.position.ReadValue();
+        Debug.Log(mouseScreenPos);
+        Debug.Log(Camera.main);
+        Vector3 mousePos = Camera.main.ScreenToWorldPoint(mouseScreenPos);
         bullet.SetShotDirection(mousePos - transform.position);
     }
 }

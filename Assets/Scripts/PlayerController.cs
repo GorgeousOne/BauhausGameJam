@@ -15,7 +15,7 @@ public class PlayerController : MonoBehaviour {
     void Awake() {
         _rigid = GetComponent<Rigidbody2D>();
         _gameInputs = new GameInputs();
-        _gameInputs.Player1.Enable();
+        _gameInputs.Enable();
     }
 
     private Vector2 _moveInput;
