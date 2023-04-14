@@ -9,13 +9,13 @@ public class PlayerController : MonoBehaviour {
     [SerializeField] private float accelerateTime = 0.2f;
     
     private GameInputs _gameInputs;
-    private Boolean _movedLastUpdate;
+    private bool _movedLastUpdate;
     private Rigidbody2D _rigid;
     
     void Awake() {
         _rigid = GetComponent<Rigidbody2D>();
         _gameInputs = new GameInputs();
-        _gameInputs.Player1.Enable();
+        _gameInputs.Enable();
     }
 
     private Vector2 _moveInput;
