@@ -59,7 +59,6 @@ public class DinoAI : MonoBehaviour
                     SpriteRenderer.sprite = sprites[0];
                 }
 
-                Debug.Log("Dino");
                 break;
 
             case InfectionStage.Transform:
