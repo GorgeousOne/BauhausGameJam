@@ -382,6 +382,10 @@ MonoBehaviour:
   KawaiiOverload: 4
   tranformationTime: 5
   explosionTime: 5
+  sprites:
+  - {fileID: 21300000, guid: 0233ddfe2f54b573a801fafc0d7a44a5, type: 3}
+  - {fileID: 21300000, guid: 041220e0c5a6babfe80b5aa094c88b1d, type: 3}
+  - {fileID: 21300000, guid: 0ab8c4c6ac64a67ad92dd6f98abbb160, type: 3}
 --- !u!212 &1484275896
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -423,7 +427,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 7482667652216324306, guid: 75f5f34dc1b5347e0b8351032682f224, type: 3}
+  m_Sprite: {fileID: 21300000, guid: f1fbfaecc15d6fe6c8f36f94ff8293c5, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0

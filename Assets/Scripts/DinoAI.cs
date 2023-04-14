@@ -6,12 +6,14 @@ using UnityEngine;
 
 public class DinoAI : MonoBehaviour
 {
+    // Fields
     enum InfectionStage{
         Dino,
         Transform,
         Kawaii,
         Explode
     }
+
     InfectionStage Stage = InfectionStage.Dino;
     public int infectionLevel = 0;
     public int Infected = 2;
@@ -19,12 +21,29 @@ public class DinoAI : MonoBehaviour
     float Timer = 0.0f;
     public float tranformationTime = 5.0f;
     public float explosionTime = 5.0f;
-        
+
+    // Sprites
+    public Sprite[] sprites;
+
+    // Components
+    SpriteRenderer SpriteRenderer;
+    
+    [SerializeField] private float speed = 10;
+    [SerializeField] private float accelerateTime = 0.2f;
+    
+    private GameInputs _gameInputs;
+    private Rigidbody2D _rigid;
+    public Vector2 _moveInput;
 
     // Start is called before the first frame update
     void Start()
     {
-        
+        SpriteRenderer = GetComponent<SpriteRenderer>();
+        _rigid = GetComponent<Rigidbody2D>();
+    }
+
+    void FixedUpdate() {
+        _CalcMoveSpeed();
     }
 
     // Update is called once per frame
@@ -37,7 +56,7 @@ public class DinoAI : MonoBehaviour
                 if(infectionLevel >= Infected)
                 {
                     Stage = InfectionStage.Transform;
-                    
+                    SpriteRenderer.sprite = sprites[0];
                 }
 
                 Debug.Log("Dino");
@@ -48,6 +67,7 @@ public class DinoAI : MonoBehaviour
                 {
                     Stage = InfectionStage.Kawaii;
                     Timer = 0;
+                    SpriteRenderer.sprite = sprites[1];
                     break;
                 }
                 Timer = Timer + Time.deltaTime;
@@ -59,6 +79,7 @@ public class DinoAI : MonoBehaviour
                 if(infectionLevel >= KawaiiOverload)
                 {
                     Stage = InfectionStage.Explode;
+                    SpriteRenderer.sprite = sprites[2];
                 }
 
                 Debug.Log("kawaii");
@@ -81,5 +102,34 @@ public class DinoAI : MonoBehaviour
     void transformKawaii()
     {
 
+    }
+
+    private void _CalcMoveSpeed() {
+        Vector2 newVelocity = _rigid.velocity;
+		
+        if (_moveInput.magnitude > 0.01) {
+            newVelocity = GetAccelerated(_moveInput, newVelocity.magnitude);
+        }
+        else {
+            newVelocity = GetDecelerated(newVelocity);
+        }
+        _rigid.velocity = newVelocity;
+    }
+	
+    private Vector2 GetAccelerated(Vector2 headedDir, float currentSpeed) {
+        float acceleration = Time.fixedDeltaTime / accelerateTime * speed ;
+        Vector2 newSpeed = headedDir.normalized * (currentSpeed + acceleration);
+        return Vector2.ClampMagnitude(newSpeed, speed);
+    }
+    
+    private Vector2 GetDecelerated(Vector2 currentVel) {
+        float deceleration = Time.fixedDeltaTime / accelerateTime * speed;
+        float currSpeed = currentVel.magnitude;
+        
+        if (Mathf.Abs(currSpeed) < deceleration) {
+            return Vector2.zero;
+        }
+        Vector2 newSpeed = currentVel.normalized * (currSpeed - deceleration);
+        return Vector2.ClampMagnitude(newSpeed, speed);
     }
 }
