@@ -6,7 +6,8 @@ public class GameManager : MonoBehaviour {
 	public static GameManager Singleton;
 	
 	public enum Scenes {
-		MainMenu
+		MainMenu,
+		Game
 	}
 
 	private Scenes? _currentLoadedScene;
@@ -15,13 +16,14 @@ public class GameManager : MonoBehaviour {
 		Singleton = this;
 		//create player
 		LoadScene(Scenes.MainMenu);
+		Debug.Log(Singleton);
 	}
 
-	public void LoadScene(Scenes newScenes) {
+	public void LoadScene(Scenes newScene) {
 		if (_currentLoadedScene != null) {
 			SceneManager.UnloadSceneAsync(_currentLoadedScene.ToString());
 		}
-		SceneManager.LoadSceneAsync(newScenes.ToString());
-		_currentLoadedScene = newScenes;
-	}	
+		SceneManager.LoadSceneAsync(newScene.ToString(), LoadSceneMode.Additive);
+		_currentLoadedScene = newScene;
+	}
 }
