@@ -9,7 +9,7 @@ public class PlayerController : MonoBehaviour {
     [SerializeField] private float accelerateTime = 0.2f;
     
     private GameInputs _gameInputs;
-    private Boolean _movedLastUpdate;
+    private bool _movedLastUpdate;
     private Rigidbody2D _rigid;
     
     void Awake() {
