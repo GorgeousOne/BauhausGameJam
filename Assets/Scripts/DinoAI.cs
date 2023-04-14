@@ -60,7 +60,7 @@ public class DinoAI : MonoBehaviour
                     Debug.Log("transform");
                 }
 
-                Debug.Log("Dino");
+                
                 break;
 
             case InfectionStage.Transform:
