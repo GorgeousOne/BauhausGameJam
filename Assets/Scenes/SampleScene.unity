@@ -313,9 +313,9 @@ MonoBehaviour:
   speed: 10
   accelerateTime: 0.2
   _moveInput: {x: 0, y: 0}
-  movementSpeed: 0.1
+  movementSpeed: 0.5
   Target: {fileID: 445381043}
-  targetVectorUpdatetime: 1
+  targetVectorUpdatetime: 2
 --- !u!212 &1484275896
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -398,12 +398,12 @@ Rigidbody2D:
   m_Mass: 1
   m_LinearDrag: 0
   m_AngularDrag: 0.05
-  m_GravityScale: 1
+  m_GravityScale: 0
   m_Material: {fileID: 0}
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
-  m_Constraints: 0
+  m_Constraints: 4
 --- !u!58 &1484275899
 CircleCollider2D:
   m_ObjectHideFlags: 0
