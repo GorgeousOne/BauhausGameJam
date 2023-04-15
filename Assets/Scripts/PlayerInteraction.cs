@@ -9,6 +9,7 @@ public class PlayerInteraction : MonoBehaviour {
     private GameInputs _gameInputs;
     private bool _isShootPressed;
     private float _lastShot;
+    public float projectileSpawnDistance = 1;
     
     private void Awake() {
         _gameInputs = new GameInputs();
@@ -32,13 +33,12 @@ public class PlayerInteraction : MonoBehaviour {
 
     private void _shoot() {
         _lastShot = Time.time;
-        Projectile bullet = Instantiate(bulletPrefab, gameObject.transform.position, Quaternion.identity);
-
-        //Vector2 mouseScreenPos = _gameInputs.Player1.Aim.ReadValue<Vector2>();
         Vector2 mouseScreenPos = Mouse.current.position.ReadValue();
         Debug.Log(mouseScreenPos);
         Debug.Log(Camera.main);
         Vector3 mousePos = Camera.main.ScreenToWorldPoint(mouseScreenPos);
-        bullet.SetShotDirection(mousePos - transform.position);
+        Vector3 shootDirection = (mousePos - transform.position).normalized;
+        Projectile bullet = Instantiate(bulletPrefab, gameObject.transform.position+shootDirection*projectileSpawnDistance, Quaternion.identity);
+        bullet.SetShotDirection(shootDirection);
     }
 }

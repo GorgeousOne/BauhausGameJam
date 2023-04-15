@@ -149,4 +149,13 @@ public abstract class DinoAI : MonoBehaviour
         Vector2 newSpeed = currentVel.normalized * (currSpeed - deceleration);
         return Vector2.ClampMagnitude(newSpeed, speed);
     }
+
+    void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (collision.gameObject.tag == "Virus")
+        {
+            AddInfection(1);
+            Debug.Log("hit");
+        }   
+    }
 }
