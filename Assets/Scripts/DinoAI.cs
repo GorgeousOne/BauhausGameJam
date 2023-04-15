@@ -2,24 +2,21 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-
-
-public class DinoAI : MonoBehaviour
+public abstract class DinoAI : MonoBehaviour
 {
-    
-
     // Fields
-    enum InfectionStage{
+    public enum InfectionStage{
         Dino,
         Transform,
         Kawaii,
         Explode
     }
 
-    InfectionStage Stage = InfectionStage.Dino;
+    protected InfectionStage Stage = InfectionStage.Dino;
     public int infectionLevel = 0;
     public int Infected = 2;
     public int KawaiiOverload = 4;
+
     float Timer = 0.0f;
     public float tranformationTime = 5.0f;
     public float explosionTime = 5.0f;
@@ -32,26 +29,21 @@ public class DinoAI : MonoBehaviour
     
 
     //Movement
-    [SerializeField] private float speed = 10;
-    [SerializeField] private float accelerateTime = 0.2f;
+    [SerializeField] protected float speed = 10;
+    [SerializeField] protected float accelerateTime = 0.2f;
     
-    private GameInputs _gameInputs;
-    private Rigidbody2D _rigid;
+    protected Rigidbody2D _rigid;
     public Vector2 _moveInput;
-    public float movementSpeed = 0.1f;
-
+    
     public GameObject Target;
-    Vector2 TargetVector;
-    float timer2 = 0;
-    int movementStage;
-    public float targetVectorUpdatetime = 1;
 
-
+    
     // Start is called before the first frame update
     void Start()
     {
         SpriteRenderer = GetComponent<SpriteRenderer>();
         _rigid = GetComponent<Rigidbody2D>();
+        Target = GameObject.FindWithTag("Player");
     }
 
     void FixedUpdate() {
@@ -65,14 +57,7 @@ public class DinoAI : MonoBehaviour
         switch(Stage) 
         {
             case InfectionStage.Dino:
-                if(infectionLevel >= Infected)
-                {
-                    Stage = InfectionStage.Transform;
-                    SpriteRenderer.sprite = sprites[0];
-                    Debug.Log("transform");
-                }
                 MovementStage1();
-                
                 break;
 
             case InfectionStage.Transform:
@@ -87,16 +72,6 @@ public class DinoAI : MonoBehaviour
                 Timer = Timer + Time.deltaTime;
                 break;
 
-            case InfectionStage.Kawaii:
-                if(infectionLevel >= KawaiiOverload)
-                {
-                    Stage = InfectionStage.Explode;
-                    SpriteRenderer.sprite = sprites[2];
-                    Debug.Log("Explosion");
-                }
-
-                break;
-
             case InfectionStage.Explode:
                 if (Timer > explosionTime)
                 {
@@ -105,39 +80,44 @@ public class DinoAI : MonoBehaviour
                     Destroy(gameObject);
                 }
                 Timer = Timer + Time.deltaTime;
-
                 break;
         }
     }
 
-
-    void MovementStage1()
+    public void AddInfection(int levels) 
     {
-        switch(movementStage) 
-        {
-            case 0: // Targeting stage
-                TargetVector = Target.transform.position - transform.position;
-                movementStage = 1;
-                timer2 = Time.time;
+        infectionLevel += levels;
 
+        switch(Stage) 
+        {
+            case InfectionStage.Dino:
+                if(infectionLevel >= Infected)
+                {
+                    Stage = InfectionStage.Transform;
+                    SpriteRenderer.sprite = sprites[0];
+                    Debug.Log("transform");
+                }
                 break;
-            case 1:
-                _moveInput = TargetVector.normalized * movementSpeed * Time.deltaTime;
-                
-                if(timer2+targetVectorUpdatetime < Time.time){
-                    movementStage = 0;
+
+            case InfectionStage.Kawaii:
+                if(infectionLevel >= KawaiiOverload)
+                {
+                    Stage = InfectionStage.Explode;
+                    SpriteRenderer.sprite = sprites[2];
+                    Debug.Log("Explosion");
                 }
                 break;
         }
-
     }
 
-    void transformKawaii()
+    protected abstract void MovementStage1();
+
+    protected void transformKawaii()
     {
         
     }
 
-    private void _CalcMoveSpeed() {
+    protected void _CalcMoveSpeed() {
         Vector2 newVelocity = _rigid.velocity;
 		
         if (_moveInput.magnitude > 0.01) {
@@ -149,13 +129,13 @@ public class DinoAI : MonoBehaviour
         _rigid.velocity = newVelocity;
     }
 	
-    private Vector2 GetAccelerated(Vector2 headedDir, float currentSpeed) {
+    protected Vector2 GetAccelerated(Vector2 headedDir, float currentSpeed) {
         float acceleration = Time.fixedDeltaTime / accelerateTime * speed ;
         Vector2 newSpeed = headedDir.normalized * (currentSpeed + acceleration);
         return Vector2.ClampMagnitude(newSpeed, speed);
     }
     
-    private Vector2 GetDecelerated(Vector2 currentVel) {
+    protected Vector2 GetDecelerated(Vector2 currentVel) {
         float deceleration = Time.fixedDeltaTime / accelerateTime * speed;
         float currSpeed = currentVel.magnitude;
         
