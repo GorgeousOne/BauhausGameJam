@@ -12,6 +12,8 @@ public abstract class DinoAI : MonoBehaviour
         Explode
     }
 
+    [Header("Health Settings")]
+
     protected InfectionStage Stage = InfectionStage.Dino;
     public int infectionLevel = 0;
     public int Infected = 2;
@@ -29,6 +31,7 @@ public abstract class DinoAI : MonoBehaviour
     
 
     //Movement
+    [Header("Movementpattern 2 Settings")]
     [SerializeField] protected float speed = 10;
     [SerializeField] protected float accelerateTime = 0.2f;
     
@@ -37,6 +40,16 @@ public abstract class DinoAI : MonoBehaviour
     
     public GameObject Target;
 
+    protected Vector2 TargetVector2;
+    float timer3;
+    protected int movementStage2;
+    public float targetVectorUpdatetime2 = 1;
+
+    //Shooting
+    [Header("InfectionSpreading Settings")]
+    [SerializeField] private Projectile bulletPrefab;
+    private float _lastShot;
+    public float projectileSpawnDistance = 1;
     
     // Start is called before the first frame update
     protected void Start()
@@ -66,10 +79,13 @@ public abstract class DinoAI : MonoBehaviour
                     Stage = InfectionStage.Kawaii;
                     Timer = 0;
                     SpriteRenderer.sprite = sprites[1];
-                    Debug.Log("kawaii");
                     break;
                 }
                 Timer = Timer + Time.deltaTime;
+                break;
+            
+            case InfectionStage.Kawaii:
+                MovementStage2();
                 break;
 
             case InfectionStage.Explode:
@@ -95,7 +111,6 @@ public abstract class DinoAI : MonoBehaviour
                 {
                     Stage = InfectionStage.Transform;
                     SpriteRenderer.sprite = sprites[0];
-                    Debug.Log("transform");
                 }
                 break;
 
@@ -104,7 +119,6 @@ public abstract class DinoAI : MonoBehaviour
                 {
                     Stage = InfectionStage.Explode;
                     SpriteRenderer.sprite = sprites[2];
-                    Debug.Log("Explosion");
                 }
                 break;
         }
@@ -115,6 +129,26 @@ public abstract class DinoAI : MonoBehaviour
     }
     
     protected abstract void MovementStage1();
+
+    void MovementStage2()
+    {   
+        
+        switch(movementStage2) 
+        {
+            case 0: // Targeting stage
+                TargetVector2 = new Vector2(Random.value-0.5f, Random.value-0.5f).normalized;
+                movementStage2 = 1;
+                timer3 = Time.time;
+                break;
+            case 1:
+                _moveInput = TargetVector2.normalized;
+                
+                if(timer3+targetVectorUpdatetime2 < Time.time){
+                    movementStage2 = 0;
+                }
+                break;
+        }
+    }
 
     protected void transformKawaii()
     {
@@ -155,7 +189,13 @@ public abstract class DinoAI : MonoBehaviour
         if (collision.gameObject.tag == "Virus")
         {
             AddInfection(1);
-            Debug.Log("hit");
         }   
+    }
+
+    private void _shoot() {
+        _lastShot = Time.time;
+        Vector3 shootDirection = (mousePos - transform.position).normalized;
+        Projectile bullet = Instantiate(bulletPrefab, gameObject.transform.position+shootDirection*projectileSpawnDistance, Quaternion.identity);
+        bullet.SetShotDirection(shootDirection);
     }
 }

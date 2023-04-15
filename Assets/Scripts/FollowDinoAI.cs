@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class FollowDinoAI : DinoAI
 {
+    [Header("Movementpattern 1 Settings")]
     protected Vector2 TargetVector;
     float timer2;
     protected int movementStage;

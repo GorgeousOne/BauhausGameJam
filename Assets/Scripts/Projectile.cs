@@ -12,7 +12,7 @@ public class Projectile : MonoBehaviour {
 		_rigid = GetComponent<Rigidbody2D>();
 		Destroy(gameObject, lifetime);
 	}
-
+		
 	public void SetShotDirection(Vector2 direction) {
 		_rigid.velocity = speed * direction.normalized;
 	}

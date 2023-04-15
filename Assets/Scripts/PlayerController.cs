@@ -18,7 +18,7 @@ public class PlayerController : MonoBehaviour {
         _gameInputs.Enable();
     }
 
-    private Vector2 _moveInput;
+     Vector2 _moveInput;
     
     void Update() {
         _moveInput = _gameInputs.Player1.Move.ReadValue<Vector2>();
