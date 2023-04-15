@@ -39,7 +39,7 @@ public abstract class DinoAI : MonoBehaviour
 
     
     // Start is called before the first frame update
-    void Start()
+    protected void Start()
     {
         SpriteRenderer = GetComponent<SpriteRenderer>();
         _rigid = GetComponent<Rigidbody2D>();
@@ -110,6 +110,10 @@ public abstract class DinoAI : MonoBehaviour
         }
     }
 
+    protected Vector2 getTargetDist() {
+        return Target.transform.position - transform.position;
+    }
+    
     protected abstract void MovementStage1();
 
     protected void transformKawaii()
