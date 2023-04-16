@@ -13,7 +13,7 @@ public class LevelMaster : MonoBehaviour
     public GameObject[] SpawnLocations;
 
     float _metronomTimer = 0;
-    public float MetronomSpeed = 5;
+    public float MetronomSpeed = 10;
 
     // Active Level Logic
     public int Score;
