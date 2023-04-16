@@ -172,11 +172,15 @@ MonoBehaviour:
   accelerateTime: 3
   _moveInput: {x: 0, y: 0}
   Target: {fileID: 0}
+  _LevelMaster: {fileID: 0}
   targetVectorUpdatetime2: 1
   bulletPrefab: {fileID: 5633335215604372678, guid: ee59621b3c316c64e92cf2ce534dfb2a, type: 3}
   projectileSpawnDistance: 1
   shootingIntervall: 1
-  ExplosionFrames: []
+  ExplosionFrames:
+  - {fileID: 21300000, guid: f7a3885623c630745b143554fd399202, type: 3}
+  - {fileID: 21300000, guid: bab8c83c753472f418aae3d015c034bf, type: 3}
+  - {fileID: 21300000, guid: 624dc9ec5e7bc4145b1617d3a1153878, type: 3}
   explosionTime: 0.3
   nya_clip: {fileID: 8300000, guid: 83095fe466830727a83398f4860cba2f, type: 3}
   bubbling: {fileID: 8300000, guid: 368c2f2cf350dff209a186730d7da2f9, type: 3}

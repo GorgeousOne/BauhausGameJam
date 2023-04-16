@@ -419,7 +419,7 @@ GameObject:
   - component: {fileID: 345899039}
   m_Layer: 0
   m_Name: Level Master
-  m_TagString: Untagged
+  m_TagString: Level Master
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -451,7 +451,9 @@ MonoBehaviour:
   - {fileID: 265827601}
   - {fileID: 742540583}
   - {fileID: 1072301178}
+  MetronomSpeed: 10
   Score: 0
+  InLevel: []
 --- !u!4 &345899040
 Transform:
   m_ObjectHideFlags: 0

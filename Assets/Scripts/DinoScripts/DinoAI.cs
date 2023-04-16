@@ -16,6 +16,7 @@ public abstract class DinoAI : MonoBehaviour
   
     protected InfectionStage Stage = InfectionStage.Dino;
 	int infectionLevel = 0;
+    float BirthDate;
 	[Header("Health Settings")]
 	public int Infected = 2;
     public int KawaiiOverload = 4;
@@ -49,6 +50,8 @@ public abstract class DinoAI : MonoBehaviour
 	[HideInInspector] public Vector2 _moveInput;
 
 	[HideInInspector] public GameObject Target;
+    [HideInInspector] public GameObject _LevelMaster;
+    LevelMaster levelMaster;
 
     protected Vector2 TargetVector2;
     float timer3;
@@ -79,12 +82,15 @@ public abstract class DinoAI : MonoBehaviour
 	// Start is called before the first frame update
 	protected void Start()
     {
+        BirthDate = Time.time;
         SpriteRenderer = GetComponent<SpriteRenderer>();
         CapsuleCollider = GetComponent<CapsuleCollider2D>();
         ExplosionCollider = GetComponent<CircleCollider2D>();
         _rigid = GetComponent<Rigidbody2D>();
         Target = GameObject.FindWithTag("Player");
         audioSource = GetComponent<AudioSource>();
+        _LevelMaster = GameObject.FindWithTag("Level Master");
+        levelMaster = _LevelMaster.GetComponent<LevelMaster>();
     }
 
     void FixedUpdate() {
@@ -134,6 +140,10 @@ public abstract class DinoAI : MonoBehaviour
             case InfectionStage.Explode:
                 if (Timer > explosionTime)
                 {
+                    levelMaster.InLevel.Remove(gameObject);
+                    int index = levelMaster.GetFeedbackIndex(gameObject);
+                    Debug.Log(index);
+                    levelMaster.assessmentKillTime[index].Add(Time.time - BirthDate);
                     Destroy(gameObject);
                 }
                 Timer = Timer + Time.deltaTime;
@@ -148,7 +158,7 @@ public abstract class DinoAI : MonoBehaviour
 				}
 				else
 				{
-                    Debug.Log("ignite");
+
 					SpriteRenderer.sprite = ExplosionFrames[0];
 				}
 				break;
@@ -162,13 +172,14 @@ public abstract class DinoAI : MonoBehaviour
     }
 
     private void _animate() {
-	    if (_spriteTimer + spriteChangingTime > Time.time)
+	    if (_spriteTimer + spriteChangingTime < Time.time)
 	    {
 		    _spriteTimer = Time.time;
 		    if (_spriteState == 0)
 		    {
 			    _spriteState = 1;
 			    SpriteRenderer.sprite = sprites[_spriteStage * 2 + _spriteState];
+                
 		    }
 		    else
 		    {

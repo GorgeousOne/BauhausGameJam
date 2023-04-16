@@ -23,24 +23,22 @@ public class LevelMaster : MonoBehaviour
     // Active Level Logic
     public int Score;
     int Level;
-    List<GameObject> SpawnQueue;
-    List<GameObject> InLevel;
+    List<GameObject> SpawnQueue = new List<GameObject>();
+    public List<GameObject> InLevel= new List<GameObject>();
     GameState gameState;
 
 
     //Assesment
     int _assesmentDepth = 2;
-    List<float>[] assesmentKillTime = new List<float>[4];
-    List<int>[] assesmentDamage = new List<int>[4];
+    public List<List<float>> assessmentKillTime = new List<List<float>>();
+    public List<List<int>> assessmentDamage = new List<List<int>>();
 
-
-    float Spawntimer = 0;
 
     // Start is called before the first frame update
     void Start()
     {
 		Player = GameObject.FindWithTag("Player");
-        playerController = GetComponent<PlayerController>();
+        playerController = Player.GetComponent<PlayerController>();
         
         // Assessment Preparation
         ShuffleCollection();
@@ -52,8 +50,11 @@ public class LevelMaster : MonoBehaviour
     {
         switch(gameState){
             case GameState.AssessmentPhase:
-                if(checkLoad() && SpawnMetronom() && SpawnQueue.Count == 0){
+                if((checkLoad() && SpawnMetronom()) && SpawnQueue.Count != 0){
                     SpawnDino();
+                }
+                if(SpawnQueue.Count == 0){
+                    gameState = GameState.LevelPhase;
                 }
                 break;
             case GameState.LevelPhase:
@@ -113,9 +114,8 @@ public class LevelMaster : MonoBehaviour
     {
         for(int i = 0; i < _assesmentDepth; i++)
         {
-            for(int j = 0; j < DinoCollection.Length; j++)
-            {
-                SpawnQueue.Add(DinoCollection[j]);
+            foreach (GameObject Dino in DinoCollection){
+                SpawnQueue.Add(Dino);
             }
         }
     }
@@ -150,5 +150,14 @@ public class LevelMaster : MonoBehaviour
         InLevel.Add(Dino);
         SpawnQueue.RemoveAt(0);
         Instantiate(Dino, _findSuitableSpawn(), Quaternion.identity);
+    }
+    public int GetFeedbackIndex(GameObject UnkownDinoRace){
+        for(int i = 0; i < 4; i++){
+            if(DinoCollection[i].GetType() == UnkownDinoRace.GetType()){
+                Debug.Log(i);
+                return i;
+            }
+        }
+        return 3;
     }
 }
