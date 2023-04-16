@@ -8,7 +8,10 @@ public class LevelMaster : MonoBehaviour
     public int Score;
     int Level;
 	GameObject Player;
-    GameObject[] DinoCollection;
+    public GameObject[] DinoCollection;
+    public GameObject[] SpawnLocations;
+
+    float Spawntimer = 0;
 
     // Start is called before the first frame update
     void Start()
@@ -19,6 +22,26 @@ public class LevelMaster : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        if (Spawntimer == 0 || Spawntimer + 10 < Time.time)
+        {
+            Instantiate(DinoCollection[Random.Range(0,4)], _findSuitableSpawn(), Quaternion.identity);
+            Spawntimer = Time.time;
+        }
+    }
+
+    Vector3 _findSuitableSpawn()
+    {
+        Vector3 furthestSpawn = SpawnLocations[0].transform.position;
+        float furthestSpawndist = 0.0f;
+        foreach(GameObject Spawn in SpawnLocations)
+        {
+            float distance = (Player.transform.position - Spawn.transform.position).magnitude;
+            if (distance > furthestSpawndist)
+            {
+                furthestSpawndist = distance;
+                furthestSpawn = Spawn.transform.position;
+            }
+        }
+        return furthestSpawn;
     }
 }
