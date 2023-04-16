@@ -128,7 +128,6 @@ public class LevelMaster : MonoBehaviour
     }
     void AddtoScore(int val){
         Score += val;
-        Debug.Log(Score);
         highscore.UpdateScore(Score);
     }
     void SpawnDino(){

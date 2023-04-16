@@ -140,6 +140,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   speed: 10
   accelerateTime: 0.2
+  OnHealthChange:
+    m_PersistentCalls:
+      m_Calls: []
+  maxHealth: 10
   Health: 4
   sprites:
   - {fileID: 21300000, guid: a1c6f1a420b626b45969c48f44d3a31d, type: 3}
@@ -168,7 +172,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5dc2ffdf8b91c994284bfc32d152f550, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  shootInterval: 1
+  shootInterval: 0.6
   bulletPrefab: {fileID: 5633335215604372678, guid: ee59621b3c316c64e92cf2ce534dfb2a, type: 3}
   projectileSpawnDistance: 3
 --- !u!82 &5060421605797210784

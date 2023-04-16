@@ -15,7 +15,7 @@ public class PlayerController : MonoBehaviour {
     private Rigidbody2D _rigid;
 
     public int maxHealth = 10;
-    public int Health = 4;
+    public int Health = 5;
     
     CircleCollider2D CircleCollider2D;
 	SpriteRenderer SpriteRenderer;
