@@ -2,19 +2,24 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class PlayerController : MonoBehaviour {
     [SerializeField] private float speed = 10;
     [SerializeField] private float accelerateTime = 0.2f;
+
+    public UnityEvent<int> OnHealthChange;
     
     private GameInputs _gameInputs;
     private bool _movedLastUpdate;
     private Rigidbody2D _rigid;
 
-    public float Health = 4;
+    public int maxHealth = 10;
+    public int Health = 4;
+    
     CircleCollider2D CircleCollider2D;
 	SpriteRenderer SpriteRenderer;
-
+	
 	[Header("Sprite Settings")]
 	public Sprite[] sprites;
 
@@ -22,7 +27,7 @@ public class PlayerController : MonoBehaviour {
 	private float _spriteTimer = 0;
 	public float spriteChangingTime = 0.5f;
 	public int _spriteStage = 0;
-
+	
     public enum PlayerStages
     {
         walk,
@@ -149,14 +154,16 @@ public class PlayerController : MonoBehaviour {
 	{
 		if (collision.gameObject.tag == "Virus" || collision.gameObject.tag == "Dino")
 		{
-            Health = Health - 1;
+            Health -= 1;
             playerStages = PlayerStages.gotHit;
             if (Health <= 0 )
             {              
                 playerStages = PlayerStages.died;
             }
+            OnHealthChange.Invoke(Health);
 		}
 	}
+	
 	private void _spriteUpdate()
 	{
         switch (playerStages)
