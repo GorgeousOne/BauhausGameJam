@@ -52,6 +52,9 @@ public class LevelMaster : MonoBehaviour
     {
         switch(gameState){
             case GameState.AssessmentPhase:
+                if(checkLoad() && SpawnMetronom() && SpawnQueue.Count == 0){
+                    SpawnDino();
+                }
                 break;
             case GameState.LevelPhase:
                 break;
@@ -59,14 +62,6 @@ public class LevelMaster : MonoBehaviour
                 break;
             case GameState.RestingPhase:
                 break;
-        }
-
-
-
-        if (Spawntimer == 0 || Spawntimer + 10 < Time.time)
-        {
-            //Instantiate(DinoCollection[Random.Range(0,4)], _findSuitableSpawn(), Quaternion.identity);
-            Spawntimer = Time.time;
         }
     }
 
@@ -135,10 +130,25 @@ public class LevelMaster : MonoBehaviour
             return false;
         }
     }
-    void SpawnMetronom()
+    bool SpawnMetronom()
     {
         if (_metronomTimer == 0){
             _metronomTimer = Time.time;
         }
+        if ((_metronomTimer + MetronomSpeed) < Time.time)
+        {
+            _metronomTimer = 0;
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
+    void SpawnDino(){
+        GameObject Dino = SpawnQueue[0];
+        InLevel.Add(Dino);
+        SpawnQueue.RemoveAt(0);
+        Instantiate(Dino, _findSuitableSpawn(), Quaternion.identity);
     }
 }
