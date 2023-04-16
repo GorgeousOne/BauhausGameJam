@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.UI;
 
 public class PlayerInteraction : MonoBehaviour {
     
@@ -10,15 +11,19 @@ public class PlayerInteraction : MonoBehaviour {
     private bool _isShootPressed;
     private float _lastShot;
     public float projectileSpawnDistance = 1;
-    
-    private void Awake() {
+
+    PlayerController playerController;
+
+	private void Awake() {
         _gameInputs = new GameInputs();
         _gameInputs.Enable();
+        playerController = gameObject.GetComponent<PlayerController>();
     }
 
     void Update() {
         _isShootPressed = _gameInputs.Player1.Shoot.IsPressed();
         _shootLogic();
+        
     }
 
     private void _shootLogic() {
@@ -34,11 +39,11 @@ public class PlayerInteraction : MonoBehaviour {
     private void _shoot() {
         _lastShot = Time.time;
         Vector2 mouseScreenPos = Mouse.current.position.ReadValue();
-        Debug.Log(mouseScreenPos);
-        Debug.Log(Camera.main);
         Vector3 mousePos = Camera.main.ScreenToWorldPoint(mouseScreenPos);
         Vector3 shootDirection = (mousePos - transform.position).normalized;
         Projectile bullet = Instantiate(bulletPrefab, gameObject.transform.position+shootDirection*projectileSpawnDistance, Quaternion.identity);
         bullet.SetShotDirection(shootDirection);
-    }
+
+        playerController.playerStages = PlayerController.PlayerStages.shoot;
+	}
 }
