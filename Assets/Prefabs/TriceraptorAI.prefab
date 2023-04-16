@@ -168,8 +168,8 @@ MonoBehaviour:
   - {fileID: 21300000, guid: dc07bc767dfe1344b9c2dd3865fd68f5, type: 3}
   spriteChangingTime: 0.5
   _spriteStage: 0
-  speed: 10
-  accelerateTime: 0.2
+  speed: 6
+  accelerateTime: 3
   _moveInput: {x: 0, y: 0}
   Target: {fileID: 0}
   targetVectorUpdatetime2: 1
@@ -184,9 +184,9 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 7c545fcbaaf3409378d94be245c13776, type: 3}
   - {fileID: 8300000, guid: 006beb172fe2f596bb8db83e2a9e5ec1, type: 3}
   - {fileID: 8300000, guid: 8825f6899c7d7d808ac9025b71bdbb68, type: 3}
-  prepTime: 5
-  moveTime: 1.5
-  wiggleDist: 0.5
+  prepTime: 2
+  moveTime: 3
+  wiggleDist: 0.25
 --- !u!82 &659613020683839041
 AudioSource:
   m_ObjectHideFlags: 0
