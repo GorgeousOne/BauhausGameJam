@@ -16,9 +16,7 @@ public class ShamosaurusAI : DinoAI
 	public float circlespeed = 1;
 
 
-	// Start is called before the first frame update
 
-	// Update is called once per frame
 
 
 	protected override void MovementStage1()
