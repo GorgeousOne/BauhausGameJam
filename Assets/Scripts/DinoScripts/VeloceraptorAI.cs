@@ -18,6 +18,9 @@ public class VeloceraptorAI : DinoAI
 	Vector2 _secondDir = Vector2.zero;
 
 
+	// Start is called before the first frame update
+
+	// Update is called once per frame
 
 
 	protected override void MovementStage1()

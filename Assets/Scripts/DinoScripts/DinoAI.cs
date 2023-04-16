@@ -6,7 +6,6 @@ using Random = UnityEngine.Random;
 
 public abstract class DinoAI : MonoBehaviour
 {
-
     public enum InfectionStage{
         Dino,
         Transform,
@@ -17,8 +16,7 @@ public abstract class DinoAI : MonoBehaviour
   
     protected InfectionStage Stage = InfectionStage.Dino;
 	int infectionLevel = 0;
-
-    
+    float BirthDate;
 	[Header("Health Settings")]
 	public int Infected = 2;
     public int KawaiiOverload = 4;
@@ -52,8 +50,6 @@ public abstract class DinoAI : MonoBehaviour
 	[HideInInspector] public Vector2 _moveInput;
 
 	[HideInInspector] public GameObject Target;
-    PlayerController playerController;
-    
     [HideInInspector] public GameObject _LevelMaster;
     LevelMaster levelMaster;
 
@@ -86,12 +82,12 @@ public abstract class DinoAI : MonoBehaviour
 	// Start is called before the first frame update
 	protected void Start()
     {
+        BirthDate = Time.time;
         SpriteRenderer = GetComponent<SpriteRenderer>();
         CapsuleCollider = GetComponent<CapsuleCollider2D>();
         ExplosionCollider = GetComponent<CircleCollider2D>();
         _rigid = GetComponent<Rigidbody2D>();
         Target = GameObject.FindWithTag("Player");
-        playerController = Target.GetComponent<PlayerController>();
         audioSource = GetComponent<AudioSource>();
         _LevelMaster = GameObject.FindWithTag("Level Master");
         levelMaster = _LevelMaster.GetComponent<LevelMaster>();
@@ -145,8 +141,9 @@ public abstract class DinoAI : MonoBehaviour
                 if (Timer > explosionTime)
                 {
                     levelMaster.InLevel.Remove(gameObject);
-
-                    playerController.addHealth();
+                    int index = levelMaster.GetFeedbackIndex(gameObject);
+                    Debug.Log(index);
+                    levelMaster.assessmentKillTime[index].Add(Time.time - BirthDate);
                     Destroy(gameObject);
                 }
                 Timer = Timer + Time.deltaTime;

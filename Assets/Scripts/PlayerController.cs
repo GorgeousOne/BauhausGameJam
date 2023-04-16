@@ -163,13 +163,6 @@ public class PlayerController : MonoBehaviour {
             OnHealthChange.Invoke(Health);
 		}
 	}
-	public void addHealth(){
-		Health += 1;
-		OnHealthChange.Invoke(Health);
-	}
-	
-
-	
 	
 	private void _spriteUpdate()
 	{

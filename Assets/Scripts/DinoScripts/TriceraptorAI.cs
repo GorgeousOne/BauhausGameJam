@@ -5,10 +5,6 @@ using UnityEngine;
 public class TriceraptorAI : DinoAI
 {
 	// can charge at you in straight line fast, than he rests for 2 sec
-
-
-	
-
 	[Header("Movementpattern 1 Settings")]
 	[SerializeField] private float prepTime = 3;
 	[SerializeField] private float moveTime = 3;
