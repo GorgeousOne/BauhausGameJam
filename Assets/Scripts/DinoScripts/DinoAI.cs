@@ -16,7 +16,7 @@ public abstract class DinoAI : MonoBehaviour
   
     protected InfectionStage Stage = InfectionStage.Dino;
 	int infectionLevel = 0;
-    float BirthDate;
+
 	[Header("Health Settings")]
 	public int Infected = 2;
     public int KawaiiOverload = 4;
@@ -82,7 +82,6 @@ public abstract class DinoAI : MonoBehaviour
 	// Start is called before the first frame update
 	protected void Start()
     {
-        BirthDate = Time.time;
         SpriteRenderer = GetComponent<SpriteRenderer>();
         CapsuleCollider = GetComponent<CapsuleCollider2D>();
         ExplosionCollider = GetComponent<CircleCollider2D>();
@@ -141,9 +140,6 @@ public abstract class DinoAI : MonoBehaviour
                 if (Timer > explosionTime)
                 {
                     levelMaster.InLevel.Remove(gameObject);
-                    int index = levelMaster.GetFeedbackIndex(gameObject);
-                    Debug.Log(index);
-                    levelMaster.assessmentKillTime[index].Add(Time.time - BirthDate);
                     Destroy(gameObject);
                 }
                 Timer = Timer + Time.deltaTime;
