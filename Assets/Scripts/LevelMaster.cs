@@ -18,10 +18,6 @@ public class LevelMaster : MonoBehaviour
 
     // Active Level Logic
     public int Score;
-    int Level = 1;
-    List<GameObject> SpawnQueue = new List<GameObject>();
-
-
 
     // Start is called before the first frame update
     void Start()
@@ -31,22 +27,17 @@ public class LevelMaster : MonoBehaviour
         
         highscore = ScoreBar.GetComponent<Highscore>();
         // Assessment Preparation
-        
-        queueDinos();
+
+        SpawnDino();
         highscore.UpdateScore(0);
 	}
 
     // Update is called once per frame
     void Update()
     {
-        if(SpawnMetronom() && checkLoad() && SpawnQueue.Count != 0){
+        if(SpawnMetronom()){
             SpawnDino();
         }
-        if(SpawnQueue.Count == 0){
-            queueDinos();
-            Level++;
-        }
-        
     }
 
     Vector3 _findSuitableSpawn()
@@ -65,41 +56,7 @@ public class LevelMaster : MonoBehaviour
         return furthestSpawn;
     }
 
-    public static List<T> Shuffle<T>(List<T> _list)
-    {
-        for (int i = 0; i < _list.Count; i++)
-        {
-            T temp = _list[i];
-            int randomIndex = Random.Range(i, _list.Count);
-            _list[i] = _list[randomIndex];
-            _list[randomIndex] = temp;
-        }
 
-        return _list;
-    }
-
-    void ShuffleCollection()
-    {
-        GameObject[] newDinoOrder = new GameObject[4];
-        List<int> Indexes = new List<int> {0, 1, 2, 3};
-        Shuffle<int>(Indexes);
-        for(int i = 0;i < Indexes.Count; i++){
-            int randIndex = Random.Range(0,Indexes.Count); 
-            newDinoOrder[i] = DinoCollection[Indexes[i]];
-        }
-        DinoCollection = newDinoOrder;
-    }
-
-    void queueDinos()
-    {
-        for(int i = 0; i < Level; i++)
-        {
-            ShuffleCollection();
-            foreach (GameObject Dino in DinoCollection){
-                SpawnQueue.Add(Dino);
-            }
-        }
-    }
     bool checkLoad() // Maybe better method
     {
         if (playerController.Health >= 2)
@@ -130,11 +87,11 @@ public class LevelMaster : MonoBehaviour
         Score += val;
         highscore.UpdateScore(Score);
     }
+
     void SpawnDino(){
-        GameObject Dino = SpawnQueue[0];
+        GameObject Dino = DinoCollection[Random.Range(0,4)];
         GameObject Doni = Instantiate(Dino, _findSuitableSpawn(), Quaternion.identity);
         Doni.GetComponent<DinoAI>().OnDeath.AddListener(AddtoScore);
-        SpawnQueue.RemoveAt(0);
     }
 
 }
