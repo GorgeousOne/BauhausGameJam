@@ -209,4 +209,9 @@ public class PlayerController : MonoBehaviour {
 			CircleCollider2D.offset = new Vector2(CircleCollider2D.offset.x * -1, CircleCollider2D.offset.y);
 		}
 	}
+
+	public void AddHealth() {
+		Health = Math.Min(maxHealth, Health + 1);
+		OnHealthChange.Invoke(Health);
+	}
 }
