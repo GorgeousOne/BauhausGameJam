@@ -672,11 +672,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 63249a7c0c1a3c84fb0782d7592c221b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  DinoCollection: []
-  SpawnLocations: []
+  ScoreBar: {fileID: 2877185778639461567}
+  DinoCollection:
+  - {fileID: 6307868356182902525, guid: 146bedbda6f87e44e8748f8f54f3b55f, type: 3}
+  - {fileID: 8434211519379592625, guid: 10f15afbdbaf96c40953ea687054ae97, type: 3}
+  - {fileID: 4201934673739079806, guid: d38a058c3775282488faca137de481fd, type: 3}
+  - {fileID: 8278078820778513721, guid: a73d16a14f4562c4cbcd1c59d435adf4, type: 3}
+  SpawnLocations:
+  - {fileID: 437569875}
+  - {fileID: 1299392705}
+  - {fileID: 948411443}
+  - {fileID: 2132278856}
   MetronomSpeed: 10
   Score: 0
-  InLevel: []
 --- !u!4 &1282635878
 Transform:
   m_ObjectHideFlags: 0
@@ -737,6 +745,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1667812021}
   - component: {fileID: 1667812020}
+  - component: {fileID: 1667812022}
   m_Layer: 0
   m_Name: anti_tank
   m_TagString: Untagged
@@ -811,6 +820,22 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!58 &1667812022
+CircleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1667812019}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  serializedVersion: 2
+  m_Radius: 0.6766667
 --- !u!1 &1795687708
 GameObject:
   m_ObjectHideFlags: 0
@@ -905,6 +930,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1987821352}
   - component: {fileID: 1987821351}
+  - component: {fileID: 1987821353}
   m_Layer: 0
   m_Name: sand_bags
   m_TagString: Untagged
@@ -979,6 +1005,22 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!70 &1987821353
+CapsuleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1987821350}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: -0.000000032584445, y: -0.27333817}
+  m_Size: {x: 2.1533337, y: 1.6066681}
+  m_Direction: 1
 --- !u!1 &2029389640
 GameObject:
   m_ObjectHideFlags: 0
@@ -1288,6 +1330,14 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 2919546060868220140, guid: 2fe153f4aab504c49bccc676b146f8c5, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0.03
+      objectReference: {fileID: 0}
+    - target: {fileID: 2919546060868220140, guid: 2fe153f4aab504c49bccc676b146f8c5, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -1.56
+      objectReference: {fileID: 0}
     - target: {fileID: 7468848519894361770, guid: 2fe153f4aab504c49bccc676b146f8c5, type: 3}
       propertyPath: m_Name
       value: Player
@@ -1348,6 +1398,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2126340496}
   - component: {fileID: 2126340495}
+  - component: {fileID: 2126340497}
   m_Layer: 0
   m_Name: box
   m_TagString: Untagged
@@ -1422,6 +1473,22 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!58 &2126340497
+CircleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2126340494}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  serializedVersion: 2
+  m_Radius: 0.69
 --- !u!1 &2132278856
 GameObject:
   m_ObjectHideFlags: 0
@@ -1575,3 +1642,8 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d20e2b7f65ad08d418861406a3cc95d7, type: 3}
+--- !u!1 &2877185778639461567 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2877185779618029551, guid: d20e2b7f65ad08d418861406a3cc95d7, type: 3}
+  m_PrefabInstance: {fileID: 2877185778639461566}
+  m_PrefabAsset: {fileID: 0}

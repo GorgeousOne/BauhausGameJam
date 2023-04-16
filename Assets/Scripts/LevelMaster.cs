@@ -8,6 +8,8 @@ public class LevelMaster : MonoBehaviour
     // Resources
 	GameObject Player;
     PlayerController playerController;
+    public GameObject ScoreBar;
+    Highscore highscore;
     public GameObject[] DinoCollection;
     public GameObject[] SpawnLocations;
 
@@ -16,9 +18,9 @@ public class LevelMaster : MonoBehaviour
 
     // Active Level Logic
     public int Score;
-    int Level;
+    int Level = 1;
     List<GameObject> SpawnQueue = new List<GameObject>();
-    public List<GameObject> InLevel= new List<GameObject>();
+
 
 
     // Start is called before the first frame update
@@ -27,9 +29,11 @@ public class LevelMaster : MonoBehaviour
 		Player = GameObject.FindWithTag("Player");
         playerController = Player.GetComponent<PlayerController>();
         
+        highscore = ScoreBar.GetComponent<Highscore>();
         // Assessment Preparation
         
         queueDinos();
+        highscore.UpdateScore(0);
 	}
 
     // Update is called once per frame
@@ -38,6 +42,11 @@ public class LevelMaster : MonoBehaviour
         if(SpawnMetronom() && checkLoad() && SpawnQueue.Count != 0){
             SpawnDino();
         }
+        if(SpawnQueue.Count == 0){
+            queueDinos();
+            Level++;
+        }
+        
     }
 
     Vector3 _findSuitableSpawn()
@@ -117,12 +126,16 @@ public class LevelMaster : MonoBehaviour
             return false;
         }
     }
-
+    void AddtoScore(int val){
+        Score += val;
+        Debug.Log(Score);
+        highscore.UpdateScore(Score);
+    }
     void SpawnDino(){
         GameObject Dino = SpawnQueue[0];
-        InLevel.Add(Dino);
+        GameObject Doni = Instantiate(Dino, _findSuitableSpawn(), Quaternion.identity);
+        Doni.GetComponent<DinoAI>().OnDeath.AddListener(AddtoScore);
         SpawnQueue.RemoveAt(0);
-        Instantiate(Dino, _findSuitableSpawn(), Quaternion.identity);
     }
 
 }

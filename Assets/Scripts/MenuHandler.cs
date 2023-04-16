@@ -16,7 +16,6 @@ public class MenuHandler : MonoBehaviour
     }
 
     public void StartGame() {
-        Debug.Log(GameManager.Singleton);
         GameManager.Singleton.LoadScene(GameManager.Scenes.Game);
     }
 }

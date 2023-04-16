@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 using Random = UnityEngine.Random;
 
 public abstract class DinoAI : MonoBehaviour
@@ -13,6 +14,7 @@ public abstract class DinoAI : MonoBehaviour
         Explode
     }
 
+    public UnityEvent<int> OnDeath;
   
     protected InfectionStage Stage = InfectionStage.Dino;
 	int infectionLevel = 0;
@@ -88,8 +90,7 @@ public abstract class DinoAI : MonoBehaviour
         _rigid = GetComponent<Rigidbody2D>();
         Target = GameObject.FindWithTag("Player");
         audioSource = GetComponent<AudioSource>();
-        _LevelMaster = GameObject.FindWithTag("Level Master");
-        levelMaster = _LevelMaster.GetComponent<LevelMaster>();
+        
     }
 
     void FixedUpdate() {
@@ -139,7 +140,8 @@ public abstract class DinoAI : MonoBehaviour
             case InfectionStage.Explode:
                 if (Timer > explosionTime)
                 {
-                    levelMaster.InLevel.Remove(gameObject);
+                    OnDeath.Invoke(8);
+                    Debug.Log("Hey ");
                     Destroy(gameObject);
                 }
                 Timer = Timer + Time.deltaTime;

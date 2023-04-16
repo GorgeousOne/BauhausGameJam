@@ -16,7 +16,6 @@ public class GameManager : MonoBehaviour {
 		Singleton = this;
 		//create player
 		LoadScene(Scenes.MainMenu);
-		Debug.Log(Singleton);
 	}
 
 	public void LoadScene(Scenes newScene) {

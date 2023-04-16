@@ -154,6 +154,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7ace9d955ff922249bed85d78bf7d4fc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  OnDeath:
+    m_PersistentCalls:
+      m_Calls: []
   Infected: 2
   KawaiiOverload: 4
   tranformationTime: 5
@@ -172,6 +175,7 @@ MonoBehaviour:
   accelerateTime: 0.2
   _moveInput: {x: 0, y: 0}
   Target: {fileID: 0}
+  _LevelMaster: {fileID: 0}
   targetVectorUpdatetime2: 1
   bulletPrefab: {fileID: 5633335215604372678, guid: ee59621b3c316c64e92cf2ce534dfb2a, type: 3}
   projectileSpawnDistance: 1
@@ -180,7 +184,7 @@ MonoBehaviour:
   - {fileID: 21300000, guid: f7a3885623c630745b143554fd399202, type: 3}
   - {fileID: 21300000, guid: bab8c83c753472f418aae3d015c034bf, type: 3}
   - {fileID: 21300000, guid: 624dc9ec5e7bc4145b1617d3a1153878, type: 3}
-  explosionTime: 5
+  explosionTime: 0.8
   nya_clip: {fileID: 8300000, guid: 83095fe466830727a83398f4860cba2f, type: 3}
   bubbling: {fileID: 8300000, guid: 368c2f2cf350dff209a186730d7da2f9, type: 3}
   exlposion_clips:
