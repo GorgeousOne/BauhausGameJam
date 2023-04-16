@@ -42,12 +42,16 @@ public class PlayerController : MonoBehaviour {
 	float PoofTimer = 0;
     public Sprite[] PoofSprites;
 
+	//Sounds 
+	AudioSource audioSource;
+
 	void Awake() {
         _rigid = GetComponent<Rigidbody2D>();
         _gameInputs = new GameInputs();
         _gameInputs.Enable();
 		SpriteRenderer = gameObject.GetComponent<SpriteRenderer>();
 		CircleCollider2D = gameObject.GetComponent<CircleCollider2D>();
+		audioSource = gameObject.GetComponent<AudioSource>();
 	}
 
      Vector2 _moveInput;
@@ -84,6 +88,7 @@ public class PlayerController : MonoBehaviour {
 				{ 
                     PoofTimer = Time.time; 
                     _moveInput = Vector2.zero;
+					audioSource.Play();
 				}
                 float process = (Time.time - PoofTimer) /PoofDuration;
 

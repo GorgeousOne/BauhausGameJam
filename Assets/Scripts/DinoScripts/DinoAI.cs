@@ -66,6 +66,12 @@ public abstract class DinoAI : MonoBehaviour
 	public float explosionTime = 5.0f;
     bool exploding = false;
 
+	// Sounds 
+	AudioSource audioSource;
+    public AudioClip nya_clip;
+    public AudioClip bubbling;
+    public AudioClip[] exlposion_clips;
+
 
 
 	// Start is called before the first frame update
@@ -76,6 +82,7 @@ public abstract class DinoAI : MonoBehaviour
         ExplosionCollider = GetComponent<CircleCollider2D>();
         _rigid = GetComponent<Rigidbody2D>();
         Target = GameObject.FindWithTag("Player");
+        audioSource = GetComponent<AudioSource>();
     }
 
     void FixedUpdate() {
@@ -96,6 +103,7 @@ public abstract class DinoAI : MonoBehaviour
                 { 
                     Timer = Time.time;
 					_spriteStage = 1;
+                    transformKawaii();
 				}
                 
                 if (Timer + tranformationTime/2 < Time.time)
@@ -226,8 +234,10 @@ public abstract class DinoAI : MonoBehaviour
 
     protected void transformKawaii()
     {
-        
-    }
+        audioSource.clip = bubbling;
+        audioSource.Play();
+		audioSource.clip = nya_clip;
+	}
 
     protected void _CalcMoveSpeed() {
         Vector2 newVelocity = _rigid.velocity;
@@ -267,7 +277,9 @@ public abstract class DinoAI : MonoBehaviour
     }
 
     private void _shoot() {
-        _lastShot = Time.time;
+		
+		audioSource.Play();
+		_lastShot = Time.time;
         Vector3 shootDirection = TargetVector2;
         Projectile bullet = Instantiate(bulletPrefab, gameObject.transform.position+shootDirection*projectileSpawnDistance, Quaternion.identity);
         bullet.SetShotDirection(shootDirection);
@@ -280,5 +292,8 @@ public abstract class DinoAI : MonoBehaviour
         ExplosionCollider.enabled = true;
 		// freeze Position
 		exploding = true;
+
+        audioSource.clip = exlposion_clips[Random.Range(0,3)];
+        audioSource.Play();
     }
 }
