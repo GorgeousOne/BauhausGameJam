@@ -1,6 +1,8 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 public abstract class DinoAI : MonoBehaviour
 {
@@ -155,32 +157,35 @@ public abstract class DinoAI : MonoBehaviour
         //Sprite Update
         if (!exploding)
         {
-			if (_spriteTimer + spriteChangingTime > Time.time)
-			{
-				_spriteTimer = Time.time;
-				if (_spriteState == 0)
-				{
-					_spriteState = 1;
-					SpriteRenderer.sprite = sprites[_spriteStage * 2 + _spriteState];
-				}
-				else
-				{
-					_spriteState = 0;
-					SpriteRenderer.sprite = sprites[_spriteStage * 2 + _spriteState];
-				}
-			}
-
-			if (_moveInput.x > 0) // find Better solution for collider flipping
-			{
-				SpriteRenderer.flipX = true;
-				CapsuleCollider.offset = new Vector2(CapsuleCollider.offset.x * -1, CapsuleCollider.offset.y);
-			}
-			else
-			{
-				SpriteRenderer.flipX = false;
-				CapsuleCollider.offset = new Vector2(CapsuleCollider.offset.x * -1, CapsuleCollider.offset.y);
-			}
+	        _animate();
 		}
+    }
+
+    private void _animate() {
+	    if (_spriteTimer + spriteChangingTime > Time.time)
+	    {
+		    _spriteTimer = Time.time;
+		    if (_spriteState == 0)
+		    {
+			    _spriteState = 1;
+			    SpriteRenderer.sprite = sprites[_spriteStage * 2 + _spriteState];
+		    }
+		    else
+		    {
+			    _spriteState = 0;
+			    SpriteRenderer.sprite = sprites[_spriteStage * 2 + _spriteState];
+		    }
+	    }
+	    Vector2 velocity = _rigid.velocity;
+
+	    if (Mathf.Abs(velocity.x) > 0.01) {
+		    bool isFlipped = velocity.x > 0;
+
+		    if (isFlipped != SpriteRenderer.flipX) {
+			    CapsuleCollider.offset = new Vector2(CapsuleCollider.offset.x * -1, CapsuleCollider.offset.y);
+			    SpriteRenderer.flipX = isFlipped;
+		    }
+	    }
     }
 
     public void AddInfection(int levels) 

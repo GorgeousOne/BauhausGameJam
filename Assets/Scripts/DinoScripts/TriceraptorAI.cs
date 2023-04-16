@@ -17,9 +17,7 @@ public class TriceraptorAI : DinoAI
 
 	private float _moveStart;
 	private Vector2 _moveDir;
-
-	private bool _isWigglingForward;
-
+	
 	new void Start()
 	{
 		base.Start();
@@ -40,10 +38,9 @@ public class TriceraptorAI : DinoAI
 				_moveDir = getTargetDist().normalized;
 			}
 		}
-		else
-		{
-			transform.position = _prepPos + (_isWigglingForward ? 1 : -1) * wiggleDist * _moveDir;
-			_isWigglingForward = !_isWigglingForward;
+		else {
+			float dTime = Time.time - _prepStart;
+			transform.position = _prepPos + Mathf.Sin(4 * Mathf.PI * dTime) * wiggleDist * _moveDir;
 
 			if (Time.time > _prepStart + prepTime)
 			{
