@@ -44,6 +44,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6eb028ee02c29af498a705f2777afd50, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  fullHeartSprite: {fileID: 21300000, guid: ec9c157ba218ac543b6ab98100be9ce4, type: 3}
-  emptyHeartSprite: {fileID: 21300000, guid: f7a3885623c630745b143554fd399202, type: 3}
-  spacing: 1
+  fullHeartSprite: {fileID: 21300000, guid: 0c264d4b356c0a8d5ba545105f8646b7, type: 3}
+  emptyHeartSprite: {fileID: 21300000, guid: be0825d13a2bd81089a6d723258e80d3, type: 3}
+  spacing: 1.1
