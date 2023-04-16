@@ -3,10 +3,10 @@ using System.Collections.Generic;
 using UnityEngine;
 using static UnityEngine.GraphicsBuffer;
 
-public class LevelMaster : MonoBehaviour
-{
+public class LevelMaster : MonoBehaviour {
+    [SerializeField] private Canvas gameOverScreen;
     // Resources
-	GameObject Player;
+    GameObject Player;
     PlayerController playerController;
     public GameObject ScoreBar;
     Highscore highscore;
@@ -23,6 +23,7 @@ public class LevelMaster : MonoBehaviour
     void Start()
     {
 		Player = GameObject.FindWithTag("Player");
+        Player.GetComponent<PlayerController>().OnHealthChange.AddListener(_checkForDeath);
         playerController = Player.GetComponent<PlayerController>();
         
         highscore = ScoreBar.GetComponent<Highscore>();
@@ -86,8 +87,16 @@ public class LevelMaster : MonoBehaviour
     void AddtoScore(int val){
         Score += val;
         highscore.UpdateScore(Score);
+        Player.GetComponent<PlayerController>().AddHealth();
     }
 
+    private void _checkForDeath(int health) {
+        if (health != 0) {
+            return;
+        }
+        gameOverScreen.gameObject.SetActive(true);
+    }
+    
     void SpawnDino(){
         GameObject Dino = DinoCollection[Random.Range(0,4)];
         GameObject Doni = Instantiate(Dino, _findSuitableSpawn(), Quaternion.identity);
